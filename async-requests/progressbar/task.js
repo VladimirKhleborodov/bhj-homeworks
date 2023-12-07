@@ -14,7 +14,7 @@ form.addEventListener('submit', event => {
   xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/upload');
   
   xhr.upload.addEventListener('progress', event => {
-    progress.value = event.total / event.loaded;
+    progress.value = event.loaded / event.total;
   });
   
   xhr.addEventListener('loadend', () => {
