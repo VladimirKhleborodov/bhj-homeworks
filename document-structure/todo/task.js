@@ -1,3 +1,4 @@
+const form = document.getElementById('tasks__form');
 const button = document.getElementById('tasks__add');
 
 function createTask() {
@@ -6,7 +7,7 @@ function createTask() {
   const taskInput = document.getElementById('task__input');
   const taskInputValue = taskInput.value.trim();
   taskTitle.innerText = taskInputValue;
-
+  
   const hyperlink = document.createElement('a');
   hyperlink.classList.add('task__remove');
   hyperlink.setAttribute('href', '#');
@@ -14,16 +15,23 @@ function createTask() {
   hyperlink.addEventListener('click', () => {
     task.remove();
   });
-
+  
   const task = document.createElement('div');
   task.classList.add('task');
   task.appendChild(taskTitle);
   task.appendChild(hyperlink);
-
+  
   const tasksList = document.getElementById('tasks__list');
-  tasksList.appendChild(task);
+  if (taskInputValue === '') {
+    form.reset();
+    return;
+  } else {
+    tasksList.appendChild(task);
+    form.reset();
+  }
 }
 
-button.addEventListener('click', () => {
+button.addEventListener('click', (event) => {
+  event.preventDefault();
   createTask();
 });
