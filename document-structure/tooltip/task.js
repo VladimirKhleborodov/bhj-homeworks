@@ -3,15 +3,18 @@ const hyperlinkArr = [...document.querySelectorAll('.has-tooltip')];
 
 hyperlinkArr.forEach(el => {
   const tooltipElement = document.createElement('span');
-  const tooltip = el.insertAdjacentElement('beforeEnd', tooltipElement);
-  tooltip.classList.add('tooltip');
-
+  tooltipElement.classList.add('tooltip');
+  tooltipElement.classList.add('tooltip_active');
+  
   el.addEventListener('click', (event) => {
     event.preventDefault();
-    tooltip.classList.add('tooltip_active');
-    tooltip.innerText = el.getAttribute('title');
-    tooltip.style.position = 'absolute';
-    tooltip.style.left = `${el.getBoundingClientRect().x}px`;
-    setTimeout(() => tooltip.classList.remove('tooltip_active'), 1000);
+    if ([...el.children].includes(tooltipElement)) {
+      tooltipElement.classList.toggle('tooltip_active');
+    } else {
+      el.appendChild(tooltipElement);
+      tooltipElement.innerText = el.getAttribute('title');
+      tooltipElement.style.position = 'absolute';
+      tooltipElement.style.left = `${el.getBoundingClientRect().x}px`;
+    }
   });
 });
